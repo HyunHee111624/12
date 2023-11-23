@@ -8,13 +8,16 @@
 #define N_COINPOS           12
 #define MAX_COIN             4
 
+#define MAX_SHARKSTEP        6
+#define SHARK_INITPOS       -4
+
 static int board_status[N_BOARD];
 static int board_coin[N_BOARD];
 
 static int board_SharkPosition;
 
 
-int board_initboard(void)
+int board_initBoard(void)
 {
     int i;
     for (i=0; i<N_BOARD; i++)
@@ -36,6 +39,7 @@ int board_initboard(void)
               }
         }
     }
+    
     return 0;
 }
 
@@ -75,4 +79,19 @@ int board_getBoardCoin(int pos)
 }
 
 //int board_getSharkPosition(void);
+int board_stepShark(void)
+{
+    int step = rand()%MAX_SHARKSTEP + 1;
+    int i;
+    for (i=+1; i<=board_SharkPosition+step; i++)
+    {
+        if ( i >= 0 && i < N_BOARD)
+           board_status[i] = BOARDSTATUS_NOK;
+    }
+    
+    board_SharkPosition += step;
+    
+    return board_SharkPosition;
+}
+
 //int board_stepShark(void);
